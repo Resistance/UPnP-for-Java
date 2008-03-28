@@ -89,6 +89,8 @@
 *		- Changed httpRequestRecieved() not to ignore HEAD requests.
 *	04/12/06
 *		- Added setUserData() and getUserData() to set a user original data object.
+*	03/29/08
+*		- Added isrunning() to know whether the device is running.
 * 
 ******************************************************************/
 
@@ -1578,6 +1580,7 @@ public class Device implements org.cybergarage.http.HTTPRequestListener, SearchL
 		byte fileByte[] = new byte[0];
 		if (isDescriptionURI(uri) == true) {
 			String localAddr = httpReq.getLocalAddress();
+			localAddr = HostInterface.getInterface();
 			fileByte = getDescriptionData(localAddr);
 		}
 		else if ((embDev = getDeviceByDescriptionURI(uri)) != null) {
@@ -1988,6 +1991,11 @@ public class Device implements org.cybergarage.http.HTTPRequestListener, SearchL
 	public boolean stop()
 	{
 		return stop(true);
+	}
+
+	public boolean isrunning()
+	{
+		return (getAdvertiser() != null) ? true : false;
 	}
 
 	////////////////////////////////////////////////
