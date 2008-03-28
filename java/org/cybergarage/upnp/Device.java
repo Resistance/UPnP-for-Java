@@ -90,7 +90,7 @@
 *	04/12/06
 *		- Added setUserData() and getUserData() to set a user original data object.
 *	03/29/08
-*		- Added isrunning() to know whether the device is running.
+*		- Added isRunning() to know whether the device is running.
 * 
 ******************************************************************/
 
@@ -1993,7 +1993,7 @@ public class Device implements org.cybergarage.http.HTTPRequestListener, SearchL
 		return stop(true);
 	}
 
-	public boolean isrunning()
+	public boolean isRunning()
 	{
 		return (getAdvertiser() != null) ? true : false;
 	}
