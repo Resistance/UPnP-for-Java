@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.cybergarage.util.Debug;
+
 public class HostInterface
 {
 	////////////////////////////////////////////////
@@ -110,7 +112,9 @@ public class HostInterface
 				}
 			}
 		}
-		catch(Exception e){};
+		catch(Exception e){
+			Debug.warning(e);
+		};
 		return nHostAddrs;
 	}
 
