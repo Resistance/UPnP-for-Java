@@ -38,7 +38,6 @@ import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import org.cybergarage.http.HTTPRequest;
 import org.cybergarage.upnp.UPnP;

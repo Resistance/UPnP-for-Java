@@ -1749,7 +1749,7 @@ public class Device implements org.cybergarage.http.HTTPRequestListener, SearchL
 	{
 		String callback = subReq.getCallback();
 		try {
-			URL url = new URL(callback);
+			new URL(callback);
 		}
 		catch (Exception e) {
 			upnpBadSubscriptionRecieved(subReq, HTTPStatus.PRECONDITION_FAILED);
