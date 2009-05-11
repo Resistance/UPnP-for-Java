@@ -15,10 +15,10 @@
 
 package org.cybergarage.xml.parser;
 
-//import java.io.*;
+import java.io.*;
 
-//import org.xmlpull.v1.*;
-//import android.util.Xml;
+import org.xmlpull.v1.*;
+import android.util.Xml;
 
 import org.cybergarage.xml.*;
 
