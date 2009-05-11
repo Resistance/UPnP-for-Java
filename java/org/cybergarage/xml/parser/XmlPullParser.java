@@ -35,21 +35,18 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 	//	parse
 	////////////////////////////////////////////////
 
-	public Node parse(InputStream inStream) throws ParserException
+	public Node parse(org.xmlpull.v1.XmlPullParser xpp, InputStream inStream) throws ParserException
 	{
 		Node rootNode = null;
 		Node currNode = null;
 		
 		try {
 			InputStreamReader inReader = new InputStreamReader(inStream);
-			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-			factory.setNamespaceAware(true);
-			XmlPullParser xpp = factory.newPullParser();
 			xpp.setInput(inReader);
 			int eventType = xpp.getEventType();
-			while (eventType != XmlPullParser.END_DOCUMENT) {
+			while (eventType != org.xmlpull.v1.XmlPullParser.END_DOCUMENT) {
 				switch (eventType) {
-				case XmlPullParser.START_TAG:
+				case org.xmlpull.v1.XmlPullParser.START_TAG:
 					{
 						Node node = new Node();
 						String nodeName = xpp.getName();
@@ -68,14 +65,14 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 							rootNode = node;
 					}
 					break;
-				case XmlPullParser.TEXT:
+				case org.xmlpull.v1.XmlPullParser.TEXT:
 					{
 						String value = xpp.getText();
 						if (currNode != null)
 							currNode.setValue(value);
 					}
 					break;
-				case XmlPullParser.END_TAG:
+				case org.xmlpull.v1.XmlPullParser.END_TAG:
 					{
 						currNode = currNode.getParentNode();
 					}
@@ -83,6 +80,23 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 				}
 				eventType = xpp.next();
 			}
+		}
+		catch (Exception e) {
+			throw new ParserException(e);
+		}
+		
+		return rootNode;
+	}
+
+	public Node parse(InputStream inStream) throws ParserException
+	{
+		Node rootNode = null;
+		
+		try {
+			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			org.xmlpull.v1.XmlPullParser xpp = factory.newPullParser();
+			rootNode = parse(xpp, inStream);
 		}
 		catch (Exception e) {
 			throw new ParserException(e);

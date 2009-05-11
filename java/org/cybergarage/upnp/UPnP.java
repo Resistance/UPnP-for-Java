@@ -18,6 +18,8 @@
 *		- Added INMPR03 and INMPR03_VERSION.
 *	04/14/06
 *		- Added some functios about time-to-live, and the default value is 4.
+*	05/11/09
+*		- Changed loadDefaultXMLParser() to load org.cybergarage.xml.parser.XmlPullParser at first.
 *	
 ******************************************************************/
 
@@ -226,6 +228,7 @@ public class UPnP
 		
 		String[] parserClass = new String[]{
 				System.getProperty(XML_CLASS_PROPERTTY),
+				"org.cybergarage.xml.parser.XmlPullParser",
 				"org.cybergarage.xml.parser.JaxpParser",
 				"org.cybergarage.xml.parser.kXML2Parser",
 				"org.cybergarage.xml.parser.XercesParser"
