@@ -120,7 +120,7 @@ public class HTTPUSocket
 		
 		try {
 			// Bind only using the port without the interface address. (2003/12/12)
-			InetSocketAddress bindSock = new InetSocketAddress(/*InetAddress.getByName(bindAddr), */ bindPort);
+			InetSocketAddress bindSock = new InetSocketAddress(/*InetAddress.getByName(bindAddr),*/ bindPort);
 			ssdpUniSock = new DatagramSocket(null);
 			ssdpUniSock.setReuseAddress(true);
 			ssdpUniSock.bind(bindSock);
