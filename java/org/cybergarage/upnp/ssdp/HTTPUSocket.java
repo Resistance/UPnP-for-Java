@@ -119,16 +119,29 @@ public class HTTPUSocket
 		close();
 		
 		try {
-			// Bind only using the port without the interface address. (2003/12/12)
-			InetSocketAddress bindSock = new InetSocketAddress(/*InetAddress.getByName(bindAddr),*/ bindPort);
-			ssdpUniSock = new DatagramSocket(null);
-			ssdpUniSock.setReuseAddress(true);
-			ssdpUniSock.bind(bindSock);
+			// Changed to bind the specified address and port for Android v1.6 (2009/10/07)
+			InetSocketAddress bindInetAddr = new InetSocketAddress(InetAddress.getByName(bindAddr), bindPort);
+			ssdpUniSock = new DatagramSocket(bindInetAddr);
 		}
 		catch (Exception e) {
 			Debug.warning(e);
 			return false;
 		}
+
+		/*
+		try {
+			// Bind only using the port without the interface address. (2003/12/12)
+			InetSocketAddress bindInetAddr = new InetSocketAddress(bindPort);
+			ssdpUniSock = new DatagramSocket(null);
+			ssdpUniSock.setReuseAddress(true);
+			ssdpUniSock.bind(bindInetAddr);
+			return true;
+		}
+		catch (Exception e) {
+			Debug.warning(e);
+			return false;
+		}
+		*/
 		
 		setLocalAddress(bindAddr);
 		

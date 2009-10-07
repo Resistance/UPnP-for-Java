@@ -20,6 +20,7 @@
 package org.cybergarage.upnp.ssdp;
 
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 import org.cybergarage.upnp.*;
 
@@ -83,9 +84,10 @@ public class SSDPSearchResponseSocket extends HTTPUSocket implements Runnable
 		StringBuffer name = new StringBuffer("Cyber.SSDPSearchResponseSocket/");
 		DatagramSocket s = getDatagramSocket();
 		// localAddr is null on Android m3-rc37a (01/30/08)
-		if (s.getLocalAddress() != null) {
+		InetAddress localAddr = s.getLocalAddress();
+		if (localAddr != null) {
 			name.append(s.getLocalAddress()).append(':');
-			name.append(s.getPort());
+			name.append(s.getLocalPort());
 		}
 		deviceSearchResponseThread = new Thread(this,name.toString());
 		deviceSearchResponseThread.start();		
