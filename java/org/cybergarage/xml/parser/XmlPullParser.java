@@ -49,8 +49,16 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 				case org.xmlpull.v1.XmlPullParser.START_TAG:
 					{
 						Node node = new Node();
-						String nodeName = xpp.getName();
-						node.setName(nodeName);
+						String namePrefix = xpp.getPrefix();
+						String name = xpp.getName();
+						StringBuffer nodeName = new StringBuffer();
+						if (namePrefix != null && 0 < namePrefix.length()) {
+							nodeName.append(namePrefix);
+							nodeName.append(":");
+						}
+						if (name != null && 0 < name.length())
+							nodeName.append(name);							
+						node.setName(nodeName.toString());
 						int attrsLen = xpp.getAttributeCount();
 						for (int n=0; n<attrsLen; n++) {
 							String attrName = xpp.getAttributeName(n);
