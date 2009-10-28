@@ -1196,6 +1196,24 @@ public class Device implements org.cybergarage.http.HTTPRequestListener, SearchL
 		return iconList.getIcon(n);
 	}
 
+	public Icon getSmallestIcon()
+	{
+		Icon smallestIcon = null;		
+		IconList iconList = getIconList();
+		int iconCount = iconList.size();
+		for (int n=0; n < iconCount; n++) {
+			Icon icon = iconList.getIcon(n);
+			if (null == smallestIcon) {
+				smallestIcon = icon;
+				continue;
+			}
+			if (icon.getWidth() < smallestIcon.getWidth())
+				smallestIcon = icon;			
+		}
+		
+		return smallestIcon;
+	}
+	
 	////////////////////////////////////////////////
 	//	Notify
 	////////////////////////////////////////////////

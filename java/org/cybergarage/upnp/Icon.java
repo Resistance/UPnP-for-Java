@@ -83,9 +83,21 @@ public class Icon
 		getIconNode().setNode(WIDTH, value);
 	}
 
-	public String getWidth()
+	public void setWidth(int value)
 	{
-		return getIconNode().getNodeValue(WIDTH);
+		try {
+			setWidth(Integer.toString(value));
+		}
+		catch (Exception e) {};
+	}
+	
+	public int getWidth()
+	{
+		try {
+			return Integer.parseInt(getIconNode().getNodeValue(WIDTH));
+		}
+		catch (Exception e) {};
+		return 0;
 	}
 
 	////////////////////////////////////////////////
@@ -99,9 +111,21 @@ public class Icon
 		getIconNode().setNode(HEIGHT, value);
 	}
 
-	public String getHeight()
+	public void setHeight(int value)
 	{
-		return getIconNode().getNodeValue(HEIGHT);
+		try {
+			setHeight(Integer.toString(value));
+		}
+		catch (Exception e) {};
+	}
+	
+	public int getHeight()
+	{
+		try {
+			return Integer.parseInt(getIconNode().getNodeValue(HEIGHT));
+		}
+		catch (Exception e) {};
+		return 0;
 	}
 
 	////////////////////////////////////////////////
