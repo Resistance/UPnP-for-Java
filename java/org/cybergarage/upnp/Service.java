@@ -397,48 +397,30 @@ public class Service
 		if (scpdNode != null)
 			return scpdNode;
 		
+		Device rootDev = getDevice();
+		if (rootDev == null)
+			return null;
+		
 		String scpdURLStr = getSCPDURL();
 		try {
-			URL scpdUrl = new URL(scpdURLStr);
+			URL scpdUrl = new URL(rootDev.getAbsoluteURL(scpdURLStr));
 			scpdNode = getSCPDNode(scpdUrl);		
-		}
-		catch (Exception ex) {
-			Device rootDev = getRootDevice();
-			String urlBaseStr = rootDev.getURLBase();
-			// Thanks for Steven Yen (2003/09/03)
-			if (urlBaseStr == null || urlBaseStr.length() <= 0) {
-				String location = rootDev.getLocation();
-				String locationHost = HTTP.getHost(location);
-				int locationPort = HTTP.getPort(location);
-				urlBaseStr = HTTP.getRequestHostURL(locationHost, locationPort);
-			}
-			scpdURLStr = HTTP.toRelativeURL(scpdURLStr);
-			String newScpdURLStr = urlBaseStr + scpdURLStr;
-			try {
-				URL newScpdURL = new URL(newScpdURLStr);
-				scpdNode = getSCPDNode(newScpdURL);
-			}
-			catch (Exception e2) {
-				newScpdURLStr = HTTP.getAbsoluteURL(urlBaseStr, scpdURLStr);
-				try {
-					URL newScpdURL = new URL(newScpdURLStr);
-					scpdNode = getSCPDNode(newScpdURL);
-				}
-				catch (Exception e3) {
-					newScpdURLStr = rootDev.getDescriptionFilePath() + scpdURLStr;
-					try {
-						scpdNode = getSCPDNode(new File(newScpdURLStr));
-					}
-					catch (Exception e4) {
-						Debug.warning(e4);
-					}
-				}
+			if (scpdNode != null) {
+				data.setSCPDNode(scpdNode);
+				return scpdNode;
 			}
 		}
-
-		data.setSCPDNode(scpdNode);
+		catch (Exception e) {}
 		
-		return scpdNode;
+		String newScpdURLStr = rootDev.getDescriptionFilePath() + HTTP.toRelativeURL(scpdURLStr);
+		try {
+			scpdNode = getSCPDNode(new File(newScpdURLStr));
+		}
+		catch (Exception e) {
+			Debug.warning(e);
+		}
+		
+		return null;
 	}
 
 	public byte[] getSCPDData()

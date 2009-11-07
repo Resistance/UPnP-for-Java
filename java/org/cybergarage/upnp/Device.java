@@ -102,6 +102,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.util.Calendar;
 
+import org.cybergarage.http.HTTP;
 import org.cybergarage.http.HTTPRequest;
 import org.cybergarage.http.HTTPResponse;
 import org.cybergarage.http.HTTPServerList;
@@ -133,6 +134,7 @@ import org.cybergarage.upnp.ssdp.SSDPSearchResponse;
 import org.cybergarage.upnp.ssdp.SSDPSearchResponseSocket;
 import org.cybergarage.upnp.ssdp.SSDPSearchSocketList;
 import org.cybergarage.upnp.xml.DeviceData;
+import org.cybergarage.upnp.xml.ServiceData;
 import org.cybergarage.util.Debug;
 import org.cybergarage.util.FileUtil;
 import org.cybergarage.util.Mutex;
@@ -141,6 +143,7 @@ import org.cybergarage.xml.Node;
 import org.cybergarage.xml.Parser;
 import org.cybergarage.xml.ParserException;
 import org.cybergarage.xml.XML;
+import org.cybergarage.http.HTTP;
 
 public class Device implements org.cybergarage.http.HTTPRequestListener, SearchListener
 {
@@ -258,6 +261,47 @@ public class Device implements org.cybergarage.http.HTTPRequestListener, SearchL
 		mutex.unlock();
 	}
 	
+	////////////////////////////////////////////////
+	//	getAbsoluteURL
+	////////////////////////////////////////////////
+	
+	public String getAbsoluteURL(String urlString)
+	{
+		try {
+			URL url = new URL(urlString);
+			return url.toString();
+		}
+		catch (Exception e) {}
+		
+		Device rootDev = getRootDevice();
+		String urlBaseStr = rootDev.getURLBase();
+		
+		// Thanks for Steven Yen (2003/09/03)
+		if (urlBaseStr == null || urlBaseStr.length() <= 0) {
+			String location = rootDev.getLocation();
+			String locationHost = HTTP.getHost(location);
+			int locationPort = HTTP.getPort(location);
+			urlBaseStr = HTTP.getRequestHostURL(locationHost, locationPort);
+		}
+
+		urlString = HTTP.toRelativeURL(urlString);
+		String absUrl = urlBaseStr + urlString;
+		try {
+			URL url = new URL(absUrl);
+			return url.toString();
+		}
+		catch (Exception e) {}
+			
+		absUrl = HTTP.getAbsoluteURL(urlBaseStr, urlString);
+		try {
+			URL url = new URL(absUrl);
+			return url.toString();
+		}
+		catch (Exception e) {}
+		
+		return "";
+	}
+
 	////////////////////////////////////////////////
 	//	NMPR
 	////////////////////////////////////////////////
