@@ -43,6 +43,7 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 		try {
 			InputStreamReader inReader = new InputStreamReader(inStream);
 			xpp.setInput(inReader);
+			//xpp.setInput(inStream, "UTF-8");
 			int eventType = xpp.getEventType();
 			while (eventType != org.xmlpull.v1.XmlPullParser.END_DOCUMENT) {
 				switch (eventType) {
