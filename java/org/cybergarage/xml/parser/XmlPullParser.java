@@ -41,9 +41,9 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 		Node currNode = null;
 		
 		try {
-			InputStreamReader inReader = new InputStreamReader(inStream);
-			xpp.setInput(inReader);
-			//xpp.setInput(inStream, "UTF-8");
+			//InputStreamReader inReader = new InputStreamReader(inStream);
+			//xpp.setInput(inReader);
+			xpp.setInput(inStream, null);
 			int eventType = xpp.getEventType();
 			while (eventType != org.xmlpull.v1.XmlPullParser.END_DOCUMENT) {
 				switch (eventType) {
@@ -77,7 +77,7 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 				case org.xmlpull.v1.XmlPullParser.TEXT:
 					{
 						String value = xpp.getText();
-						if (currNode != null)
+						if (value != null && currNode != null)
 							currNode.setValue(value);
 					}
 					break;
