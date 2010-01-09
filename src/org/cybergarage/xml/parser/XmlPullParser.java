@@ -1,4 +1,4 @@
-﻿/******************************************************************
+/******************************************************************
 *
 *	CyberXML for Java
 *
@@ -97,6 +97,7 @@ public class XmlPullParser extends org.cybergarage.xml.Parser
 		return rootNode;
 	}
 
+	@Override
 	public Node parse(InputStream inStream) throws ParserException
 	{
 		Node rootNode = null;

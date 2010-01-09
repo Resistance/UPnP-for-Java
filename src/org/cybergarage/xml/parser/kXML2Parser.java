@@ -21,7 +21,7 @@ package org.cybergarage.xml.parser;
 import java.io.*;
 
 import org.kxml2.io.*;
-import org.xmlpull.v1.*;
+import org.xmlpull.v1.XmlPullParser;
 
 import org.cybergarage.xml.*;
 
@@ -39,6 +39,7 @@ public class kXML2Parser extends org.cybergarage.xml.Parser
 	//	parse
 	////////////////////////////////////////////////
 
+	@Override
 	public Node parse(InputStream inStream) throws ParserException
 	{
 		Node rootNode = null;
